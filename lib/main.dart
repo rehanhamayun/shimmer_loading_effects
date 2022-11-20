@@ -1,11 +1,13 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,7 +56,8 @@ class _LoadingListPageState extends State<LoadingListPage> {
           Expanded(
             child: ListView.builder(
               itemCount: _enabled == true ? 10 : 6,
-              itemBuilder: (_, __) {
+              // ignore: avoid_types_as_parameter_names
+              itemBuilder: (BuildContext, index) {
                 if (_enabled) {
                   return Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
@@ -105,17 +108,18 @@ class _LoadingListPageState extends State<LoadingListPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: FlatButton(
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
                 onPressed: () {
                   setState(() {
                     _enabled = !_enabled;
                   });
                 },
                 child: Text(
-                  _enabled ? 'Stop' : 'Play',
+                  _enabled ? 'Stop' : 'Press',
                   style: Theme.of(context).textTheme.button!.copyWith(
                       fontSize: 18.0,
-                      color: _enabled ? Colors.redAccent : Colors.green),
+                      color: _enabled ? Colors.white : Colors.black),
                 )),
           )
         ],
